@@ -4,33 +4,33 @@ function sum(a, b) {
     return a + b
 }
 
-const BACKEND_URL="http://localhost:3000"
+const BACKEND_URL = "http://localhost:3000"
 
 describe("Authentication", () => {
     // thats how test are written in js 
     test('add 1 + 2 to equal 3', () => {
         expect(sum(1, 2)).toBe(3);
-        
+
 
     })
 
 
-    test('User is able to signup only once',async ()=>{
-        const username ="aditya"+Math.random();
+    test('User is able to signup only once', async () => {
+        const username = "aditya" + Math.random();
         const password = "123456";
 
-        const response =axios.post(`${BACKEND_URL}/api/v1/signup`,{
+        const response = axios.post(`${BACKEND_URL}/api/v1/signup`, {
             username,
             password,
-            type:"admin"
+            type: "admin"
         });
 
         expect(response.statusCode).toBe(200)
 
-        const updatedResponse=axios.post(`${BACKEND_URL}/api/v1/signup`,{
+        const updatedResponse = axios.post(`${BACKEND_URL}/api/v1/signup`, {
             username,
             password,
-            type:"admin"
+            type: "admin"
         });
 
         // as two user shold not have same username
@@ -48,7 +48,7 @@ describe("Authentication", () => {
         expect(response.status).toBe(400)
     })
 
-    test('Signin succeeds if the username and password are correct', async() => {
+    test('Signin succeeds if the username and password are correct', async () => {
         const username = `aditya-${Math.random()}`
         const password = "123456"
 
@@ -65,10 +65,10 @@ describe("Authentication", () => {
 
         expect(response.status).toBe(200)
         expect(response.data.token).toBeDefined()
-        
+
     })
 
-    test('Signin fails if the username and password are incorrect', async() => {
+    test('Signin fails if the username and password are incorrect', async () => {
         const username = `kirat-${Math.random()}`
         const password = "123456"
 
@@ -85,6 +85,39 @@ describe("Authentication", () => {
 
         expect(response.status).toBe(403)
     })
+
+
+})
+
+describe("User Information Endpoints", () => {
+    let token ;
+    beforeAll(async () => {
+        /**
+         * any code written here run before all  the
+         * tests run   not before  every test run  { beforeEach
+         *  run before every test run}
+         * 
+         */
+        const username = `aditya-${Math.random()}`
+        const password = "123456"
+
+        await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+            username,
+            password,
+            type: "admin"
+        });
+
+        const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+            username,
+            password
+        });
+
+        toekn = response.data.token 
+
+    })
+    test("test 1")
+    test("test 2")
+    test("test 3")
 
 
 })
