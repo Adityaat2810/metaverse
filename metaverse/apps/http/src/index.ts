@@ -8,5 +8,3 @@ app.use("/api/v1",router)
 app.listen(process.env.PORT || 3000 ,()=>{
     console.log(`app is running on port 3000`)
 })
-
-
